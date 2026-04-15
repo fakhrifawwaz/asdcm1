@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class Main15 {
 
-    
     static void insertionSort(Peminjaman15[] data) {
         int n = data.length;
         for (int i = 1; i < n; i++) {
@@ -16,7 +15,6 @@ public class Main15 {
         }
     }
 
-    //menggunakan binary
     static void binarySearch(Peminjaman15[] original, String nimCari) {
         int n = original.length;
 
@@ -61,7 +59,6 @@ public class Main15 {
         while (start > 0 && data[start - 1].mhs.nim.equals(nimCari)) {
             start--;
         }
-
         int end = found;
         while (end < n - 1 && data[end + 1].mhs.nim.equals(nimCari)) {
             end++;
@@ -73,6 +70,7 @@ public class Main15 {
         }
     }
 
+    // tambah peminjaman
     static Peminjaman15[] tambahPeminjaman(Peminjaman15[] dataPinjam,
                                             Mahasiswa15[] dataMhs,
                                             Buku15[] dataBuku,
@@ -110,7 +108,6 @@ public class Main15 {
         System.out.print("Masukkan Lama Pinjam: ");
         int lamaInput = sc.nextInt();
 
-        // array expansion
         Peminjaman15[] arrayBaru = new Peminjaman15[dataPinjam.length + 1];
         for (int i = 0; i < dataPinjam.length; i++) {
             arrayBaru[i] = dataPinjam[i];
@@ -121,6 +118,7 @@ public class Main15 {
         return arrayBaru;
     }
 
+    // statistik
     static void tampilStatistik(Peminjaman15[] data) {
         int totalDenda = 0;
         int jumlahTerlambat = 0;
@@ -137,6 +135,21 @@ public class Main15 {
         System.out.println("Total Denda Keseluruhan  : Rp " + totalDenda);
         System.out.println("Jumlah Peminjaman Terlambat : " + jumlahTerlambat);
         System.out.println("Jumlah Peminjaman Tepat Waktu: " + jumlahTepatWaktu);
+    }
+
+    static void tampilLaporanMahasiswa(Mahasiswa15[] dataMhs, Peminjaman15[] dataPinjam) {
+        // buat array LaporanMahasiswa15 berukuran sama dengan array mahasiswa
+        LaporanMahasiswa15[] laporan = new LaporanMahasiswa15[dataMhs.length];
+
+        for (int i = 0; i < dataMhs.length; i++) {
+            laporan[i] = new LaporanMahasiswa15(dataMhs[i]);
+            laporan[i].hitungLaporan(dataPinjam);
+        }
+
+        System.out.println("=== LAPORAN PER MAHASISWA ===");
+        for (int i = 0; i < laporan.length; i++) {
+            laporan[i].tampilLaporan();
+        }
     }
 
     public static void main(String[] args) {
@@ -171,6 +184,7 @@ public class Main15 {
             System.out.println("5. Cari Berdasarkan NIM (Binary Search)");
             System.out.println("6. Tambah Data Peminjaman");
             System.out.println("7. Statistik Peminjaman");
+            System.out.println("8. Laporan Per Mahasiswa");
             System.out.println("0. Keluar");
             System.out.print("Pilih: ");
             pilih = sc.nextInt();
@@ -214,6 +228,9 @@ public class Main15 {
 
             } else if (pilih == 7) {
                 tampilStatistik(peminjamans);
+
+            } else if (pilih == 8) {
+                tampilLaporanMahasiswa(mahasiswas, peminjamans);
 
             } else if (pilih == 0) {
                 System.out.println("Keluar dari program. Terima kasih!");
